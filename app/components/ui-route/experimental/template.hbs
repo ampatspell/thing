@@ -4,6 +4,17 @@
     Experimental
   {{/rows.header}}
 
+  {{#each model.content as |model|}}
+    {{#rows.row}}
+      <div>
+        {{model.doc.path}} {{get model.doc.data order}}
+      </div>
+      <div class="small">
+        {{model}}
+      </div>
+    {{/rows.row}}
+  {{/each}}
+
 {{/ui-block/rows}}
 
 {{set-global component=this}}

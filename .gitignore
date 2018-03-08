@@ -9,6 +9,7 @@
 /bower_components
 /functions/node_modules
 /functions/lib
+/functions/dist
 
 # misc
 /.sass-cache

@@ -1,6 +1,6 @@
 {
   "name": "thing",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "private": true,
   "description": "Small description for thing goes here",
   "license": "MIT",
@@ -17,7 +17,11 @@
     "test": "ember test",
     "coverage": "COVERAGE=true ember test",
     "bump": "npm version patch; git push --follow-tags",
-    "deploy": "npm run bump; ember build -prod && firebase deploy"
+    "deploy:build": "ember build -prod",
+    "deploy:cp": "rm -rf functions/dist && cp -r dist functions",
+    "deploy:rm": "rm dist/index.html",
+    "deploy:deploy": "firebase deploy",
+    "deploy": "npm run bump && npm run deploy:build && npm run deploy:cp && npm run deploy:rm && npm run deploy:deploy"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",

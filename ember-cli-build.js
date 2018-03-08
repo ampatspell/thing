@@ -5,7 +5,7 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     addons: {
-      blacklist: [ 'ember-cli-fastboot' ]
+      // blacklist: [ 'ember-cli-fastboot' ]
     }
   });
 

@@ -1,8 +1,21 @@
+import { getOwner } from '@ember/application';
 import Helper from '@ember/component/helper';
+
+const isFastBoot = owner => {
+  let fastboot = getOwner(owner).lookup('service:fastboot');
+  if(!fastboot) {
+    return;
+  }
+  return fastboot.get('isFastBoot');
+}
 
 export default Helper.extend({
 
   _replace(hash) {
+    if(isFastBoot(this)) {
+      return;
+    }
+
     let keys = this.get('_keys') || [];
 
     keys.map(key => delete window[key]);
