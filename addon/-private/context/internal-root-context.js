@@ -1,5 +1,6 @@
 import InternalContext from './internal-context';
 import Auth from '../auth/internal-auth';
+import Functions from '../functions/internal-functions';
 import configureFirebase from './firebase-initializer';
 import { assert } from '@ember/debug';
 import { resolve } from 'rsvp';
@@ -24,6 +25,7 @@ export default class InternalRootContext extends InternalContext {
     this.root = this;
     this.opts = validate(opts);
     this.auth = new Auth(this);
+    this.functions = new Functions(this);
     this._configure(identifier, opts);
   }
 
@@ -61,6 +63,7 @@ export default class InternalRootContext extends InternalContext {
   willDestroy() {
     this.stores.rootContextWillDestroy(this);
     this.auth.destroy();
+    this.functions.destroy();
     this.firebase && this.firebase.delete();
     super.willDestroy();
   }

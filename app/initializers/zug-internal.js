@@ -15,6 +15,7 @@ import Storage from 'ember-cli-zug/-private/storage/storage';
 import StorageReference from 'ember-cli-zug/-private/storage/reference';
 import StorageTask from 'ember-cli-zug/-private/storage/task';
 import StorageMetadata from 'ember-cli-zug/-private/storage/metadata';
+import Functions from 'ember-cli-zug/-private/functions/functions';
 
 export default {
   name: 'zug:internal',
@@ -33,6 +34,8 @@ export default {
     container.register('zug:storage/reference', StorageReference);
     container.register('zug:storage/task', StorageTask);
     container.register('zug:storage/metadata', StorageMetadata);
+
+    container.register('zug:functions', Functions);
 
     container.register('zug:identity', ModelArrayProxy);
     container.register('zug:query', Query);

@@ -10,10 +10,10 @@ export default EmberObject.extend(InternalMixin, {
   absoluteIdentifier: prop('absoluteIdentifier'),
   ready:              prop('ready'),
 
-  identity: identity(),
-
-  auth: modelprop('auth'),
-  storage: modelprop('storage'),
+  identity:  identity(),
+  auth:      modelprop('auth'),
+  storage:   modelprop('storage'),
+  functions: modelprop('functions'),
 
   // identifier
   nest: model('nest'),

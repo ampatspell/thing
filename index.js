@@ -18,6 +18,8 @@ module.exports = {
     app.import('vendor/ember-cli-zug/firebase.js.map');
     app.import('vendor/ember-cli-zug/firebase-firestore.js');
     app.import('vendor/ember-cli-zug/firebase-firestore.js.map');
+    app.import('vendor/ember-cli-zug/firebase-functions.js');
+    app.import('vendor/ember-cli-zug/firebase-functions.js.map');
     app.import('vendor/ember-cli-zug/firebase-shim.js');
     app.import('vendor/ember-cli-zug/versions.js');
   },
@@ -38,7 +40,9 @@ module.exports = {
         'firebase.js',
         'firebase.js.map',
         'firebase-firestore.js',
-        'firebase-firestore.js.map'
+        'firebase-firestore.js.map',
+        'firebase-functions.js',
+        'firebase-functions.js.map'
       ],
       destDir: '/ember-cli-zug'
     }));
