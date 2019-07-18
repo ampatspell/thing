@@ -119,9 +119,11 @@ export default class InternalDocument extends Internal {
     this.ignoringDataUpdates(() => this.context.dataManager.updateInternal(this.data, json, 'storage'));
   }
 
-  didLoad(exists, json) {
+  didLoad(snapshot) {
+    let exists = snapshot.exists;
     if(!(this.state.exists === undefined && !exists)) {
-      this.deserialize(json);
+      let data = snapshot.data({ serverTimestamps: 'estimate' });
+      this.deserialize(data);
     }
     this.withPropertyChanges(true, changed => this.state.onLoaded(exists, changed));
   }

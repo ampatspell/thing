@@ -8,11 +8,7 @@ export default class PersistedReference extends Reference {
   constructor(context, ref) {
     super();
     this._ref = ref;
-    this._observer = new BasicDocumentObserver(context, ref, {
-      onMetadata: metadata => this._onMetadata(metadata),
-      update: props => this._didLoad(props)
-    });
-    this._observer.start();
+    this._observer = null;
   }
 
   get id() {
@@ -32,17 +28,38 @@ export default class PersistedReference extends Reference {
   }
 
   get metadata() {
-    return this._observer.metadata;
+    let observer = this.observer();
+    return observer && observer.metadata;
   }
 
   //
+
+  _createObserver() {
+    let context = this.context;
+    let ref = this._ref;
+    return new BasicDocumentObserver(context, ref, {
+      onMetadata: metadata => this._onMetadata(metadata),
+      onSnapshot: snapshot => this._didLoad(snapshot)
+    });
+  }
+
+  observer(create) {
+    let observer = this._observer;
+    if(!observer && create) {
+      observer = this._createObserver();
+      this._observer = observer;
+      observer.start();
+      console.log('created observer', this.immutablePath);
+    }
+    return observer;
+  }
 
   _onMetadata() {
     this.withDocument(document => document.onMetadata());
   }
 
-  _didLoad({ exists, data, metadata }) {
-    this.withDocument(document => document.didLoad(exists, data, metadata));
+  _didLoad(snapshot) {
+    this.withDocument(document => document.didLoad(snapshot));
   }
 
   _willSave() {
@@ -73,7 +90,7 @@ export default class PersistedReference extends Reference {
 
   // { optional }
   load(opts={}) {
-    return this._observer.promise.then(snapshot => {
+    return this.observer(true).promise.then(snapshot => {
       if(!snapshot.exists && !opts.optional) {
         return reject(new FireError({ error: 'document', reason: 'missing' }));
       }
@@ -102,8 +119,7 @@ export default class PersistedReference extends Reference {
   //
 
   willDestroy() {
-    this._observer.destroy();
-    this._ref = null;
+    this._observer && this._observer.destroy();
     super.willDestroy();
   }
 
